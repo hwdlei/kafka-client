@@ -79,6 +79,7 @@ public class KafkaConsumerGroup {
 		props.put("zookeeper.session.timeout.ms", "60000");
 		props.put("zookeeper.sync.time.ms", "2000");
 		props.put("auto.commit.interval.ms", "1000");
+		props.put("auto.offset.reset", "smallest");
 		return new ConsumerConfig(props);
 	}
 

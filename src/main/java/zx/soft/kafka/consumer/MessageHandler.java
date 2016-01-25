@@ -8,6 +8,6 @@ package zx.soft.kafka.consumer;
  */
 public interface MessageHandler {
 
-	public void handleMessage(byte[] message);
+	public void handleMessage(byte[] key, byte[] message);
 
 }

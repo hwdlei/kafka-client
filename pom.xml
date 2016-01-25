@@ -5,11 +5,36 @@
 	<artifactId>kafka-client</artifactId>
 	<version>1.0.0</version>
 	<name>Kafka demo</name>
+
+	<properties>
+		<kafka.version>0.9.0.0</kafka.version>
+		<cdh.hadoop.version>2.6.0-cdh5.4.9</cdh.hadoop.version>
+	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>${cdh.hadoop.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${cdh.hadoop.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-client</artifactId>
+			<version>${cdh.hadoop.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-clients</artifactId>
-			<version>0.8.2.2</version>
+			<version>${kafka.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
@@ -50,6 +75,13 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -64,6 +96,19 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- 指定公司私有Maven仓库地址，以便下载该jar包 -->
+	<repositories>
+		<repository>
+			<id>cloudera</id>
+			<url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+		</repository>
+		<repository>
+			<id>zxsoft-public</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.3.23:18081/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<!-- 部署仓库 -->
 	<distributionManagement>
 		<snapshotRepository>

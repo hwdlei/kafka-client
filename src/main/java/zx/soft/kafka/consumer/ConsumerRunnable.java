@@ -32,7 +32,7 @@ public class ConsumerRunnable implements Runnable {
 	public void run() {
 		ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
 		while (it.hasNext()) {
-			this.handler.handleMessage(it.next().message());
+			this.handler.handleMessage(it.next().key(), it.next().message());
 			count.incrementAndGet();
 		}
 		logger.info("Shutting down Thread: " + this.hashCode());

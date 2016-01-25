@@ -34,7 +34,7 @@ public class ProducerRunnable implements Runnable {
 				if (i % 1000 == 0) {
 					logger.info("i = " + i);
 				}
-				this.producer.pushRecord(topic, (base + i) + "");
+				this.producer.pushRecord(topic, (base + i + "").getBytes());
 			}
 		} finally {
 			this.latch.countDown();
