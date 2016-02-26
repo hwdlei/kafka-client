@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.kafka.producer.ProducerInstance;
 
-public class ProducerExample {
-	private static Logger logger = LoggerFactory.getLogger(ProducerExample.class);
+public class PcapProducerExample {
+	private static Logger logger = LoggerFactory.getLogger(PcapProducerExample.class);
 
 	public static void main(String args[]) throws InterruptedException, ExecutionException, IOException {
 

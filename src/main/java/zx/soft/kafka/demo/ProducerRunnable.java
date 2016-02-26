@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.kafka.producer.ProducerInstance;
 
 public class ProducerRunnable implements Runnable {
-	private Logger logger = LoggerFactory.getLogger(ProducerExample.class);
+	private Logger logger = LoggerFactory.getLogger(PcapProducerExample.class);
 
 	private ProducerInstance producer;
 	private int base;

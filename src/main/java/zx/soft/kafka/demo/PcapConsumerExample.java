@@ -19,7 +19,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-public class ConsumerDemo {
+public class PcapConsumerExample {
 
 	public static void main(String[] args) {
 		Properties props = new Properties();

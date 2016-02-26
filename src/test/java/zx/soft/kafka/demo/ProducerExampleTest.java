@@ -11,7 +11,7 @@ public class ProducerExampleTest extends TestCase {
 
 	public void testGetPacket() throws UnknownHostException {
 		long timestamp = System.currentTimeMillis();
-		byte[] datas = ProducerExample.getPacket(timestamp, 0, "123".getBytes(), "123".getBytes().length);
+		byte[] datas = PcapProducerExample.getPacket(timestamp, 0, "123".getBytes(), "123".getBytes().length);
 		ByteBuffer buffer = ByteBuffer.wrap(datas);
 		buffer.order(ByteOrder.BIG_ENDIAN);
 		if (datas.length > 28) {

@@ -18,9 +18,9 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
- *
+ * 线程安全的生产者实例，采用单例实现
  * @author donglei
- *
+ * @date: 2016年1月25日 下午7:58:35
  */
 public class ProducerInstance {
 
@@ -33,19 +33,23 @@ public class ProducerInstance {
 	private static ProducerInstance instance = new ProducerInstance();
 
 	private ProducerInstance() {
-		Properties kafka = ConfigUtil.getProps("kafka.properties");
-		logger.info("load properties :" + kafka.toString());
-		sync = Boolean.parseBoolean(kafka.getProperty("sync", "false"));
+		Properties kafkaProps = ConfigUtil.getProps("kafka.properties");
+		logger.info("load properties :" + kafkaProps.toString());
+		sync = Boolean.parseBoolean(kafkaProps.getProperty("sync", "false"));
 
 		Properties props = new Properties();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka.getProperty("bootstrap.servers"));
+
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProps.getProperty("bootstrap.servers"));
+
+		props.put(ProducerConfig.ACKS_CONFIG, kafkaProps.getProperty("acks", "1"));
+		props.put(ProducerConfig.RETRIES_CONFIG, kafkaProps.getProperty("retries", "0"));
+		props.put(ProducerConfig.BATCH_SIZE_CONFIG, kafkaProps.getProperty("batch.size", "16384"));
+		props.put(ProducerConfig.LINGER_MS_CONFIG, kafkaProps.getProperty("linger.ms", "0"));
+		props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, kafkaProps.getProperty("buffer.memory", "33554432"));
+		props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaProps.getProperty("timeout.ms", "50000"));
 
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
-
-		props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafka.getProperty("timeout.ms", "50000"));
-
-		props.put(ProducerConfig.ACKS_CONFIG, kafka.getProperty("acks", "1"));
 
 		this.producer = new KafkaProducer<String, byte[]>(props);
 	}
