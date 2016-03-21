@@ -30,6 +30,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.powermock.api.easymock.PowerMock;
 
+import zx.soft.kafka.connect.file.FileStreamSourceConnector;
+import zx.soft.kafka.connect.file.FileStreamSourceTask;
+
 public class FileStreamSourceConnectorTest {
 
 	private static final String SINGLE_TOPIC = "test";

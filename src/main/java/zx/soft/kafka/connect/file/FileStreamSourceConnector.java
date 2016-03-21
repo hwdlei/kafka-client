@@ -15,7 +15,7 @@
  * limitations under the License.
  **/
 
-package zx.soft.kafka.connect;
+package zx.soft.kafka.connect.file;
 
 import java.util.ArrayList;
 import java.util.HashMap;

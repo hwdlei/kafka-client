@@ -31,6 +31,8 @@ import org.apache.kafka.connect.sink.SinkRecord;
 import org.junit.Before;
 import org.junit.Test;
 
+import zx.soft.kafka.connect.file.FileStreamSinkTask;
+
 public class FileStreamSinkTaskTest {
 
 	private FileStreamSinkTask task;

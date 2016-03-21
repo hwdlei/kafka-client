@@ -15,7 +15,7 @@
  * limitations under the License.
  **/
 
-package zx.soft.kafka.connect;
+package zx.soft.kafka.connect.file;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

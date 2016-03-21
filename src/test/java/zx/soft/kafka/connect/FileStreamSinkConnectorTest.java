@@ -31,6 +31,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.powermock.api.easymock.PowerMock;
 
+import zx.soft.kafka.connect.file.FileStreamSinkConnector;
+import zx.soft.kafka.connect.file.FileStreamSinkTask;
+
 public class FileStreamSinkConnectorTest {
 
 	private static final String MULTIPLE_TOPICS = "test1,test2";
