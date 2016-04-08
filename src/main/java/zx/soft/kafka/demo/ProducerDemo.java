@@ -8,7 +8,7 @@ public class ProducerDemo {
 
 		// Producer
 		ProducerInstance producer = ProducerInstance.getInstance();
-		String topic = "kafka";
+		String topic = "test";
 		for (int i = 0; i < 10; i++) {
 			producer.pushRecord(topic, (i + "").getBytes());
 		}
