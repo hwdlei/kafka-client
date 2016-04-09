@@ -1,4 +1,4 @@
-package zx.soft.kafka.demo;
+package zx.soft.kafka.producer.demo;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.kafka.producer.ProducerInstance;
 
-public class ProducerThreadExample {
-	private static Logger logger = LoggerFactory.getLogger(ProducerThreadExample.class);
+public class MultiThreadProducerDemo {
+	private static Logger logger = LoggerFactory.getLogger(MultiThreadProducerDemo.class);
 
 	public static void main(String args[]) throws InterruptedException, ExecutionException {
 		int numOfThread = 10;

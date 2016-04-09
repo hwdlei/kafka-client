@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import zx.soft.kafka.producer.demo.PcapProducerExample;
 import junit.framework.TestCase;
 
 public class ProducerExampleTest extends TestCase {

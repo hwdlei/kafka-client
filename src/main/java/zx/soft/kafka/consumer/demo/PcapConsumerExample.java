@@ -1,4 +1,4 @@
-package zx.soft.kafka.demo;
+package zx.soft.kafka.consumer.demo;
 
 import java.util.Arrays;
 import java.util.Properties;

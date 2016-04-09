@@ -1,6 +1,5 @@
-package zx.soft.kafka.demo;
+package zx.soft.kafka.consumer.demo;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -10,10 +9,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class SimpleConsumerDemo implements Serializable {
+public class SimpleConsumerDemo {
 
-	private static final long serialVersionUID = -1754274621470675844L;
+	private static final Logger logger = LoggerFactory.getLogger(SimpleConsumerDemo.class);
 
 	public static void main(String[] args) {
 		Properties props = new Properties();
@@ -22,18 +23,17 @@ public class SimpleConsumerDemo implements Serializable {
 		props.put("enable.auto.commit", "true");
 		props.put("auto.commit.interval.ms", "1000");
 		props.put("session.timeout.ms", "30000");
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		props.put("key.deserializer", StringDeserializer.class.getName());
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
-		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
 		consumer.subscribe(Arrays.asList("test"));
 
 		while (true) {
-			ConsumerRecords<String, byte[]> records = consumer.poll(100);
+			ConsumerRecords<String, byte[]> records = consumer.poll(1000);
 			for (ConsumerRecord<String, byte[]> record : records) {
 				System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", record.partition(),
 						record.offset(), record.key(), record.value());
-
 			}
 		}
 	}

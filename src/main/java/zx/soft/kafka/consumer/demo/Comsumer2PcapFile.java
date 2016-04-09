@@ -1,4 +1,4 @@
-package zx.soft.kafka.demo;
+package zx.soft.kafka.consumer.demo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,7 +20,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-public class ComsumerDemo implements Serializable {
+public class Comsumer2PcapFile implements Serializable {
 
 	private static final long serialVersionUID = -1754274621470675844L;
 

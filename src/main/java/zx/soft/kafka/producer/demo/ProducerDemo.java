@@ -1,4 +1,4 @@
-package zx.soft.kafka.demo;
+package zx.soft.kafka.producer.demo;
 
 import zx.soft.kafka.producer.ProducerInstance;
 
