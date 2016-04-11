@@ -31,7 +31,7 @@ public class Consumer2ExtractFile {
 		props.put("key.deserializer", StringDeserializer.class.getName());
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.subscribe(Arrays.asList("test"));
+		consumer.subscribe(Arrays.asList("apt-cache"));
 		String libDir = "/opt/jchannel/jchannel/lib/jcmodule";
 		String outPutDir = "/tmp/output";
 		String linkDir = "/tmp/output_link";

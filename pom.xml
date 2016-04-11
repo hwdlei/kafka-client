@@ -18,7 +18,7 @@
 			<artifactId>apt-extract</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-	
+
 		<!-- hadoop -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -55,11 +55,6 @@
 		<!-- 方便查看源码 -->
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
-			<artifactId>connect-json</artifactId>
-			<version>${kafka.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
 			<artifactId>connect-file</artifactId>
 			<version>0.9.0.0</version>
 		</dependency>
@@ -88,6 +83,10 @@
 				<exclusion>
 					<groupId>org.restlet.jse</groupId>
 					<artifactId>org.restlet.ext.jackson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -121,6 +120,41 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>logback.xml</exclude>
+						<exclude>kafka.properties</exclude>
+						<exclude>pcap/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/distribution.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

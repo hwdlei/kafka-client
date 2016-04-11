@@ -1,6 +1,5 @@
 package zx.soft.kafka.consumer;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -18,20 +17,19 @@ import org.apache.kafka.common.errors.WakeupException;
 public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHandler<K, V> {
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 	private final KafkaConsumer<K, V> consumer;
-	private final List<String> topics;
 
-	public KafkaConsumerRunner(KafkaConsumer<K, V> consumer, List<String> topics) {
+	public KafkaConsumerRunner(KafkaConsumer<K, V> consumer) {
 		this.consumer = consumer;
-		this.topics = topics;
 	}
 
 	@Override
 	public void run() {
 		try {
-			consumer.subscribe(this.topics);
 			while (!closed.get()) {
 				ConsumerRecords<K,V> records = consumer.poll(1000);
 				for(ConsumerRecord<K, V> record : records) {
+					System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", record.partition(),
+							record.offset(), record.key(), record.value());
 					handleMessage(record.key(), record.value());
 				}
 			}

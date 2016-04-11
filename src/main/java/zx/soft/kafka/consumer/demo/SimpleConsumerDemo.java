@@ -19,7 +19,7 @@ public class SimpleConsumerDemo {
 	public static void main(String[] args) {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "kafka01:19092,kafka02:19093,kafka03:19094");
-		props.put("group.id", "aksdjfkasldkf");
+		props.put("group.id", "kafka-apt-cache");
 		props.put("enable.auto.commit", "true");
 		props.put("auto.commit.interval.ms", "1000");
 		props.put("session.timeout.ms", "30000");
@@ -27,7 +27,7 @@ public class SimpleConsumerDemo {
 		props.put("key.deserializer", StringDeserializer.class.getName());
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.subscribe(Arrays.asList("test"));
+		consumer.subscribe(Arrays.asList("apt-cache"));
 
 		while (true) {
 			ConsumerRecords<String, byte[]> records = consumer.poll(1000);

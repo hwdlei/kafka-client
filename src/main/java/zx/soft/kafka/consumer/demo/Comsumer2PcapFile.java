@@ -37,7 +37,7 @@ public class Comsumer2PcapFile implements Serializable {
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.subscribe(Arrays.asList("test"));
+		consumer.subscribe(Arrays.asList("apt-cache"));
 
 		byte[] pcapHeader = new byte[24];
 		try (DataInputStream inputStream = new DataInputStream(new FileInputStream(
@@ -65,6 +65,8 @@ public class Comsumer2PcapFile implements Serializable {
 					ByteBuffer buffer = ByteBuffer.wrap(datas);
 					buffer.order(ByteOrder.BIG_ENDIAN);
 					if (datas.length > 32) {
+						buffer.position(32);
+
 						// IP标识16byte
 						byte[] ipDatas = new byte[16];
 						buffer.get(ipDatas);
@@ -84,15 +86,16 @@ public class Comsumer2PcapFile implements Serializable {
 						try {
 							String ip = InetAddress.getByAddress(ipDatas).getHostAddress();
 							long timestamp = buffer.getLong();
-							long index = buffer.getInt();
-							byte[] payloadDatas = new byte[datas.length - 32];
-							System.arraycopy(datas, 32, payloadDatas, 0, datas.length - 32);
-							outputStream.write(payloadDatas);
-							System.out.println(Hex.encodeHexString(payloadDatas));
-							n++;
-							break;
+							long index = buffer.getLong();
 						} catch (Exception e) {
 						}
+
+						byte[] payloadDatas = new byte[buffer.remaining()];
+						buffer.get(payloadDatas);
+						outputStream.write(payloadDatas);
+						System.out.println(Hex.encodeHexString(payloadDatas));
+						n++;
+						break;
 					}
 				}
 			}
