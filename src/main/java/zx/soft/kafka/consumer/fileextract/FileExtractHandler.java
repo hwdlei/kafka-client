@@ -1,6 +1,5 @@
 package zx.soft.kafka.consumer.fileextract;
 
-import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -32,32 +31,32 @@ public class FileExtractHandler extends KafkaConsumerRunner<String, byte[]> {
 		ByteBuffer buffer = ByteBuffer.wrap(datas);
 		if (buffer.remaining() > 32) {
 
-			//					buffer.position(32);
+			buffer.position(32);
 
 			// IP标识16byte
-			byte[] ipDatas = new byte[16];
-			buffer.get(ipDatas);
-			boolean netType = false;
-			for (int i = 0; i < 12; i++) {
-				byte a = ipDatas[i];
-				if (a != 0) {
-					netType = true;
-					break;
-				}
-			}
-			if (!netType) {
-				byte[] tmp = new byte[4];
-				System.arraycopy(ipDatas, 12, tmp, 0, 4);
-				ipDatas = tmp;
-			}
-			try {
-				String ip = InetAddress.getByAddress(ipDatas).getHostAddress();
-				long timestamp = buffer.getLong();
-				long index = buffer.getLong();
-
-				logger.info("ip:" + ip + "\t timestamp:" + timestamp + "\tindex: " + index);
-			} catch (Exception e) {
-			}
+			//			byte[] ipDatas = new byte[16];
+			//			buffer.get(ipDatas);
+			//			boolean netType = false;
+			//			for (int i = 0; i < 12; i++) {
+			//				byte a = ipDatas[i];
+			//				if (a != 0) {
+			//					netType = true;
+			//					break;
+			//				}
+			//			}
+			//			if (!netType) {
+			//				byte[] tmp = new byte[4];
+			//				System.arraycopy(ipDatas, 12, tmp, 0, 4);
+			//				ipDatas = tmp;
+			//			}
+			//			try {
+			//				String ip = InetAddress.getByAddress(ipDatas).getHostAddress();
+			//				long timestamp = buffer.getLong();
+			//				long index = buffer.getLong();
+			//
+			//				logger.info("ip:" + ip + "\t timestamp:" + timestamp + "\tindex: " + index);
+			//			} catch (Exception e) {
+			//			}
 
 			while (buffer.hasRemaining()) {
 				int size = buffer.remaining() > ExtractCore.ONE_BUFFER_SIZE ? ExtractCore.ONE_BUFFER_SIZE : buffer

@@ -6,6 +6,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *	Kafka抽象消费者
@@ -15,6 +17,8 @@ import org.apache.kafka.common.errors.WakeupException;
  * @param <V>
  */
 public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHandler<K, V> {
+
+	private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerRunner.class);
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 	private final KafkaConsumer<K, V> consumer;
 
@@ -28,8 +32,8 @@ public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHan
 			while (!closed.get()) {
 				ConsumerRecords<K,V> records = consumer.poll(1000);
 				for(ConsumerRecord<K, V> record : records) {
-					System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", record.partition(),
-							record.offset(), record.key(), record.value());
+					logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(),
+							record.offset(), record.key(), record.value().toString());
 					handleMessage(record.key(), record.value());
 				}
 			}
