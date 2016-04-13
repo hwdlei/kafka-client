@@ -35,6 +35,7 @@ public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHan
 					logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(),
 							record.offset(), record.key(), record.value().toString());
 					handleMessage(record.key(), record.value());
+					consumer.commitSync();
 				}
 			}
 		} catch (WakeupException e) {
