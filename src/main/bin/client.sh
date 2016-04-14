@@ -108,6 +108,14 @@ function start() {
     done
 }
 
+function deldata() {
+    for i in `cat $PROJECT_DIR/bin/allocations | awk '{print $1}'`;
+    do
+        echo "$i: status ...";
+        ssh $i "rm -r ~/run-work/fileextract/"
+    done;
+}
+
 case $1 in
     "status")
         status
@@ -123,6 +131,9 @@ case $1 in
         ;;
     "start")
         start
+        ;;
+    "deldata")
+        deldata
         ;;
     "*")
         echo "error parameters"
