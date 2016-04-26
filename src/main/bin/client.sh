@@ -3,7 +3,7 @@
 # executed script file
 PRG="$0"
 
-SIGNNAME="kafkaRunDriver"
+SIGNNAME="\"fileextract/.*/kafka-client\""
 
 # is or not connect file
 while [ -h "$PRG"  ]; do
@@ -28,7 +28,7 @@ function status() {
     for i in `cat $PROJECT_DIR/bin/allocations | awk '{print $1}'`;
     do
         echo "$i: status ...";
-        ssh $i "jps | grep $SIGNNAME "
+        ssh -n $i "ps aux | grep \"$SIGNNAME\" | grep -v grep "
     done;
 }
 
@@ -36,7 +36,7 @@ function stop() {
     for i in `cat $PROJECT_DIR/bin/allocations | awk '{print $1}'`;
     do
         echo "$i: stop ...";
-        ssh $i "jps | grep $SIGNNAME | awk '{print $1}' | xargs kill -9"
+        ssh -n $i "ps aux | grep \"$SIGNNAME\" | grep -v grep | awk '{print $2}' | xargs kill -9"
     done;
 }
 
@@ -49,9 +49,9 @@ function deployOne() {
     echo $@
     for i in "$@" 
     do 
-        ssh ${HOST_IP} "mkdir -p ~/run-work/fileextract/"$i"/"
+        ssh -n ${HOST_IP} "mkdir -p ~/run-work/fileextract/"$i"/"
         scp $PROJECT_DIR/../kafka-client-2.0.0-distribution.tar.gz ${HOST_IP}:~/run-work/fileextract/"$i"/
-        ssh ${HOST_IP} "cd ~/run-work/fileextract/"$i"/ ; tar -zxvf kafka-client-2.0.0-distribution.tar.gz ; cd ~/run-work/fileextract/"$i"/kafka-client/ ; sed -i 's/^partitions=.*$/partitions="$i"/g' conf/kafka.properties"
+        ssh -n ${HOST_IP} "cd ~/run-work/fileextract/"$i"/ ; tar -zxvf kafka-client-2.0.0-distribution.tar.gz ; cd ~/run-work/fileextract/"$i"/kafka-client/ ; sed -i 's/^partitions=.*$/partitions="$i"/g' conf/kafka.properties"
     done
 }
 
@@ -95,7 +95,7 @@ function startOne() {
     shift
     for i in "$@" 
     do 
-        ssh $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start fileExtractConsumerSingle"
+        ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start fileExtractConsumerSingle"
     done
 }
 
