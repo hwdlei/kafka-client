@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=`ls -l | awk '$7 == 15 && $8 > "09:30" && $8 < "13:00" {print $9}'`
+files=`ls -l | awk '$7 == 28 && $8 > "09:30" && $8 < "23:00" {print $9}' | grep "192\.168\.4\.162" `
 for i in $files
 do
         echo $i

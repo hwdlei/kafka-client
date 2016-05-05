@@ -1,6 +1,7 @@
 package zx.soft.kafka.consumer.fileextract;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class FileExtractHandler extends KafkaConsumerRunner<String, byte[]> {
 	public void handleMessage(String key, byte[] value) {
 		byte[] datas = value;
 		ByteBuffer buffer = ByteBuffer.wrap(datas);
+		buffer.order(ByteOrder.BIG_ENDIAN);
 		if (buffer.remaining() > 32) {
 
 			buffer.position(32);

@@ -96,6 +96,7 @@ function startOne() {
     for i in "$@" 
     do 
         ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start fileExtractConsumerSingle > /dev/null"
+        sleep 5
     done
 }
 
