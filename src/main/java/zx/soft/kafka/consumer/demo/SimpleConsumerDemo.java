@@ -27,13 +27,18 @@ public class SimpleConsumerDemo {
 		props.put("key.deserializer", StringDeserializer.class.getName());
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.subscribe(Arrays.asList("apt-cache"));
-
+		consumer.subscribe(Arrays.asList("apt-test"));
+		logger.info("partition offset key value");
+		int key = -1;
 		while (true) {
 			ConsumerRecords<String, byte[]> records = consumer.poll(1000);
 			for (ConsumerRecord<String, byte[]> record : records) {
-				System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", record.partition(),
-						record.offset(), record.key(), record.value());
+				logger.info("{} {} {} {}", record.partition(), record.offset(), record.key(), record.value().toString());
+
+				if (key != -1 && key + 1 != Integer.parseInt(record.key())) {
+					//					System.exit(-1);
+				}
+				key = Integer.parseInt(record.key());
 			}
 		}
 	}

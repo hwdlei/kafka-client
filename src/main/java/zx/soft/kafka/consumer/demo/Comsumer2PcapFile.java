@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -68,27 +67,27 @@ public class Comsumer2PcapFile implements Serializable {
 						buffer.position(32);
 
 						// IP标识16byte
-						byte[] ipDatas = new byte[16];
-						buffer.get(ipDatas);
-						boolean netType = false;
-						for (int i = 0; i < 12; i++) {
-							byte a = ipDatas[i];
-							if (a != 0) {
-								netType = true;
-								break;
-							}
-						}
-						if (!netType) {
-							byte[] tmp = new byte[4];
-							System.arraycopy(ipDatas, 12, tmp, 0, 4);
-							ipDatas = tmp;
-						}
-						try {
-							String ip = InetAddress.getByAddress(ipDatas).getHostAddress();
-							long timestamp = buffer.getLong();
-							long index = buffer.getLong();
-						} catch (Exception e) {
-						}
+						//						byte[] ipDatas = new byte[16];
+						//						buffer.get(ipDatas);
+						//						boolean netType = false;
+						//						for (int i = 0; i < 12; i++) {
+						//							byte a = ipDatas[i];
+						//							if (a != 0) {
+						//								netType = true;
+						//								break;
+						//							}
+						//						}
+						//						if (!netType) {
+						//							byte[] tmp = new byte[4];
+						//							System.arraycopy(ipDatas, 12, tmp, 0, 4);
+						//							ipDatas = tmp;
+						//						}
+						//						try {
+						//							String ip = InetAddress.getByAddress(ipDatas).getHostAddress();
+						//							long timestamp = buffer.getLong();
+						//							long index = buffer.getLong();
+						//						} catch (Exception e) {
+						//						}
 
 						byte[] payloadDatas = new byte[buffer.remaining()];
 						buffer.get(payloadDatas);

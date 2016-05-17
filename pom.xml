@@ -18,6 +18,12 @@
 			<artifactId>apt-extract</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<!-- apt-parser -->
+		<dependency>
+			<groupId>zx.soft</groupId>
+			<artifactId>apt-parser</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<!-- hadoop -->
 		<dependency>
