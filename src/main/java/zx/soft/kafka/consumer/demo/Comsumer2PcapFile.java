@@ -65,7 +65,7 @@ public class Comsumer2PcapFile implements Serializable {
 					ByteBuffer buffer = ByteBuffer.wrap(datas);
 					buffer.order(ByteOrder.BIG_ENDIAN);
 					if (datas.length > 32) {
-						buffer.position(32);
+						//						buffer.position(32);
 
 						// IP标识16byte
 						byte[] ipDatas = new byte[16];
