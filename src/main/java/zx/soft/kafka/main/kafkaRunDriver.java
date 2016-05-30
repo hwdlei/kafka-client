@@ -1,5 +1,6 @@
 package zx.soft.kafka.main;
 
+import zx.soft.kafka.consumer.digest.TupleDigestConsumerSingle;
 import zx.soft.kafka.consumer.fileextract.FileExtractConsumerSingle;
 import zx.soft.utils.driver.ProgramDriver;
 
@@ -21,6 +22,7 @@ public class kafkaRunDriver {
 		try {
 			// 在hefei09机器上运行
 			pgd.addClass("fileExtractConsumerSingle", FileExtractConsumerSingle.class, "single");
+			pgd.addClass("tupleDigestConsumerSingle", TupleDigestConsumerSingle.class, "single");
 
 			pgd.driver(args);
 			// Success

@@ -14,6 +14,7 @@
 			<includes>
 				<include>logback.xml</include>
 				<include>kafka.properties</include>
+				<include>digest.properties</include>
 			</includes>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>

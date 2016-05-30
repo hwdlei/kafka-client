@@ -22,7 +22,7 @@ public class TupleDigestConsumerSingle {
 	private static final Logger logger = LoggerFactory.getLogger(TupleDigestConsumerSingle.class);
 
 	public static void main(String[] args) {
-		Properties kafkaProps = ConfigUtil.getProps("kafka.properties");
+		Properties kafkaProps = ConfigUtil.getProps("digest.properties");
 		logger.info("load properties :" + kafkaProps.toString());
 
 		Properties props = new Properties();
@@ -52,6 +52,7 @@ public class TupleDigestConsumerSingle {
 			partitions.add(new TopicPartition(topic, Integer.parseInt(part)));
 		}
 
+		logger.info("");
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
 		consumer.assign(partitions);
 		ParserCore parserCore = new ParserCore();

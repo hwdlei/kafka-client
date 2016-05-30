@@ -21,8 +21,20 @@
 		<!-- apt-parser -->
 		<dependency>
 			<groupId>zx.soft</groupId>
-			<artifactId>apt-parser</artifactId>
+			<artifactId>keyinfo-parser</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+
+		<!-- http -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.2.4</version>
 		</dependency>
 
 		<!-- hadoop -->
@@ -133,6 +145,7 @@
 					<excludes>
 						<exclude>logback.xml</exclude>
 						<exclude>kafka.properties</exclude>
+						<exclude>digest.properties</exclude>
 						<exclude>pcap/*</exclude>
 					</excludes>
 				</configuration>

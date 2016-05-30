@@ -12,6 +12,8 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.frame.reader.FrameReader;
+
 public class SimpleConsumerDemo {
 
 	private static final Logger logger = LoggerFactory.getLogger(SimpleConsumerDemo.class);
@@ -19,7 +21,7 @@ public class SimpleConsumerDemo {
 	public static void main(String[] args) {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "kafka01:19092,kafka02:19093,kafka03:19094");
-		props.put("group.id", "kafka-apt-cache");
+		props.put("group.id", "donglei");
 		props.put("enable.auto.commit", "true");
 		props.put("auto.commit.interval.ms", "1000");
 		props.put("session.timeout.ms", "30000");
@@ -27,18 +29,14 @@ public class SimpleConsumerDemo {
 		props.put("key.deserializer", StringDeserializer.class.getName());
 		props.put("value.deserializer", ByteArrayDeserializer.class.getName());
 		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.subscribe(Arrays.asList("apt-test"));
-		logger.info("partition offset key value");
+		consumer.subscribe(Arrays.asList("apt-cache"));
 		int key = -1;
 		while (true) {
 			ConsumerRecords<String, byte[]> records = consumer.poll(1000);
 			for (ConsumerRecord<String, byte[]> record : records) {
 				logger.info("{} {} {} {}", record.partition(), record.offset(), record.key(), record.value().toString());
-
-				if (key != -1 && key + 1 != Integer.parseInt(record.key())) {
-					//					System.exit(-1);
-				}
-				key = Integer.parseInt(record.key());
+				FrameReader reader = new FrameReader(record.value());
+				logger.info(reader.nextFrame().toString());
 			}
 		}
 	}

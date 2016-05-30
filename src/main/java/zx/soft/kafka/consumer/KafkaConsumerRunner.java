@@ -32,8 +32,8 @@ public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHan
 			while (!closed.get()) {
 				ConsumerRecords<K,V> records = consumer.poll(1000);
 				for(ConsumerRecord<K, V> record : records) {
-					//					logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(),
-					//							record.offset(), record.key(), record.value().toString());
+					logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(),
+							record.offset(), record.key(), record.value().toString());
 					handleMessage(record.key(), record.value());
 				}
 				consumer.commitSync();
