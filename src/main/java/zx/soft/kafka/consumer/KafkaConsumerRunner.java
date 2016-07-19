@@ -30,6 +30,7 @@ public abstract class KafkaConsumerRunner<K, V> implements Runnable, IMessageHan
 	public void run() {
 		try {
 			while (!closed.get()) {
+				logger.info("Wait 1s for getting next record!");
 				ConsumerRecords<K,V> records = consumer.poll(1000);
 				for(ConsumerRecord<K, V> record : records) {
 					logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(),

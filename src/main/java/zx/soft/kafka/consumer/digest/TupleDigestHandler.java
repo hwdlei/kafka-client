@@ -1,7 +1,5 @@
 package zx.soft.kafka.consumer.digest;
 
-import java.nio.ByteBuffer;
-
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +27,12 @@ public class TupleDigestHandler extends KafkaConsumerRunner<String, byte[]> {
 
 	@Override
 	public void handleMessage(String key, byte[] value) {
-		byte[] datas = value;
-		ByteBuffer buffer = ByteBuffer.wrap(datas);
-		if (buffer.remaining() > 32) {
-			FrameReader reader = new FrameReader(datas);
+		if (value.length > 32) {
+			FrameReader reader = new FrameReader(value);
 			Frame frame = reader.nextFrame();
 			this.parserCore.parse(frame);
+		} else {
+			logger.error("Malformed kafka data packet!");
 		}
 	}
 }

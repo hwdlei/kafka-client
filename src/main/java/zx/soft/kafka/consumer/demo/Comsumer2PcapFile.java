@@ -11,7 +11,6 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Properties;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -24,8 +23,6 @@ public class Comsumer2PcapFile implements Serializable {
 	private static final long serialVersionUID = -1754274621470675844L;
 
 	public static void main(String[] args) {
-		System.out.println("6e1906576eb30000ea05000038c9860a633d00900b2929250800".length());
-		System.out.println("6e1906576eb30000ea05000038c9860a633d00900b2929250800".length());
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "kafka01:19092,kafka02:19093,kafka03:19094");
 		props.put("group.id", "test");
@@ -60,7 +57,6 @@ public class Comsumer2PcapFile implements Serializable {
 					System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", record.partition(),
 							record.offset(), record.key(), record.value());
 					byte[] datas = record.value();
-					System.out.println(Hex.encodeHexString(datas));
 					ByteBuffer buffer = ByteBuffer.wrap(datas);
 					buffer.order(ByteOrder.BIG_ENDIAN);
 					if (datas.length > 32) {
@@ -92,7 +88,6 @@ public class Comsumer2PcapFile implements Serializable {
 						byte[] payloadDatas = new byte[buffer.remaining()];
 						buffer.get(payloadDatas);
 						outputStream.write(payloadDatas);
-						System.out.println(Hex.encodeHexString(payloadDatas));
 						n++;
 						break;
 					}
@@ -100,7 +95,6 @@ public class Comsumer2PcapFile implements Serializable {
 			}
 			outputStream.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

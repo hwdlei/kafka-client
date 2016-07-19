@@ -1,8 +1,11 @@
 package zx.soft.kafka.consumer.digest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -17,9 +20,9 @@ import zx.soft.utils.config.ConfigUtil;
 /**
  * @author donglei
  */
-public class TupleDigestConsumerSingle {
+public class TupleDigestConsumerMulti {
 
-	private static final Logger logger = LoggerFactory.getLogger(TupleDigestConsumerSingle.class);
+	private static final Logger logger = LoggerFactory.getLogger(TupleDigestConsumerMulti.class);
 
 	public static void main(String[] args) {
 		Properties kafkaProps = ConfigUtil.getProps("digest.properties");
@@ -52,11 +55,21 @@ public class TupleDigestConsumerSingle {
 			partitions.add(new TopicPartition(topic, Integer.parseInt(part)));
 		}
 
-		logger.info("partitions : " + partitions);
-		KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
-		consumer.assign(partitions);
-		ParserCore parserCore = new ParserCore();
-		new TupleDigestHandler(consumer, parserCore).run();
+		ExecutorService executor = Executors.newFixedThreadPool(partitions.size());
+
+		for (TopicPartition topicPartition : partitions) {
+			KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<String, byte[]>(props);
+			consumer.assign(Arrays.asList(topicPartition));
+			ParserCore parserCore = new ParserCore();
+			executor.execute(new TupleDigestHandler(consumer, parserCore));
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		executor.shutdown();
 	}
 
 }
