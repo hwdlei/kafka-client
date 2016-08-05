@@ -91,12 +91,14 @@ function update() {
 function startOne() {
     echo "startOne"
     echo $*
-    HOST_IP="$1"
-    shift
+    PROGRAM_NAME="$1"
+    HOST_IP="$2"
+    echo $HOST_IP
+    shift 2
     for i in "$@" 
     do 
-        ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start fileExtractConsumerSingle > /dev/null"
-        sleep 5
+       ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start "$PROGRAM_NAME" > /dev/null"
+       sleep 5
     done
 }
 
@@ -104,8 +106,8 @@ function start() {
     echo "start"
     cat $PROJECT_DIR/bin/allocations | while read i
     do
-        echo "$i: start ..."
-        startOne $i
+        echo "$i: start $1 ..."
+        startOne $1 $i
     done
 }
 
@@ -131,7 +133,8 @@ case $1 in
         update
         ;;
     "start")
-        start
+        shift
+        start $@
         ;;
     "deldata")
         deldata
