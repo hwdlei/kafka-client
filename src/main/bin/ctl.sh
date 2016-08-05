@@ -41,7 +41,7 @@ start() {
   JAVA=${JAVA-'java'}
   exec $JAVA $JVMARGS -classpath "$CLASSPATH" $mainClass "$@" &
   PROGRAM_PID=$1
-  echo $! > main_"$PROGRAM".pid
+  echo $! > main_"$PROGRAM_PID".pid
 }
 
 stop() {

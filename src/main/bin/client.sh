@@ -96,8 +96,8 @@ function startOne() {
     echo $HOST_IP
     shift 2
     for i in "$@" 
-    do 
-       ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start "$PROGRAM_NAME" > /dev/null"
+    do
+       ssh -n $HOST_IP "cd ~/run-work/fileextract/"$i"/kafka-client/ ; ./bin/ctl.sh start $PROGRAM_NAME > /dev/null"
        sleep 5
     done
 }
