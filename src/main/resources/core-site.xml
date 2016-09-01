@@ -7,5 +7,7 @@
     <property>
         <name>fs.defaultFS</name>
         <value>hdfs://kafka04:8020</value>
+<!--         <value>hdfs://10.22.0.51:8020</value> -->
+        <!-- <value>hdfs://192.168.3.101:8020</value> -->
     </property>
 </configuration>
